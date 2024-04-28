@@ -18,7 +18,7 @@ h1 {
   color: #343a40;
 }
 
-input[type="text"], select, button {
+input[type="text"], input[type="number"], select, button {
   width: calc(100% - 20px);
   padding: 10px;
   margin-bottom: 15px;
