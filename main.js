@@ -17,7 +17,11 @@ function adicionarTarefa() {
     tarefas.push(novaTarefa);
   }
 
-  localStorage.setItem('tarefas', JSON.stringify(tarefas));
+  if (nome == "" || valor == ""){
+    alert("preencha os campos indicados");
+  } else {
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+  }
 
   exibirTarefas();
   limparCampos();
