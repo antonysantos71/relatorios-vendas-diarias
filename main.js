@@ -1,40 +1,40 @@
 let editarIndex = -1; // Variável para armazenar o índice da tarefa sendo editada
 
-function adicionarTarefa() {
+function adicionarClient() {
   const nome = document.getElementById('nome').value;
   const status = document.getElementById('status').value;
   const valor = document.getElementById('valor').value;
   const valorFormatado = parseFloat(valor.replace(',', '.')).toFixed(2);
 
-  const novaTarefa = { nome, status, valor: parseFloat(valorFormatado) };
+  const newClient = { nome, status, valor: parseFloat(valorFormatado) };
 
-  let tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+  let clients = JSON.parse(localStorage.getItem('clients')) || [];
   
   if (editarIndex !== -1) { // Se estiver editando, atualiza a tarefa em vez de adicionar uma nova
-    tarefas[editarIndex] = novaTarefa;
+    clients[editarIndex] = newClient;
     editarIndex = -1; // Reseta o índice de edição
   } else {
-    tarefas.push(novaTarefa);
+    clients.push(newClient);
   }
 
   if (nome == "" || valor == ""){
     alert("preencha os campos indicados");
   } else {
-    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+    localStorage.setItem('clients', JSON.stringify(clients));
   }
 
-  exibirTarefas();
+  exibirClients();
   limparCampos();
 }
 
-function editarTarefa(index) {
-  const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
-  const tarefaEditada = tarefas[index];
+function editarClients(index) {
+  const clients = JSON.parse(localStorage.getItem('clients')) || [];
+  const clientEditada = clients[index];
 
   // Preenche os campos de adicionar com os valores da tarefa selecionada
-  document.getElementById('nome').value = tarefaEditada.nome;
-  document.getElementById('status').value = tarefaEditada.status;
-  document.getElementById('valor').value = tarefaEditada.valor.toFixed(2);
+  document.getElementById('nome').value = clientEditada.nome;
+  document.getElementById('status').value = clientEditada.status;
+  document.getElementById('valor').value = clientEditada.valor.toFixed(2);
 
   // Altera o texto do botão de adicionar para "Editar"
   document.getElementById('btnAdicionar').textContent = 'Editar';
@@ -42,14 +42,14 @@ function editarTarefa(index) {
   editarIndex = index; // Define o índice da tarefa sendo editada
 }
 
-function excluirTarefa(index) {
-  const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
-  tarefas.splice(index, 1);
-  localStorage.setItem('tarefas', JSON.stringify(tarefas));
-  exibirTarefas();
+function excluirClients(index) {
+  const clients = JSON.parse(localStorage.getItem('clients')) || [];
+  clients.splice(index, 1);
+  localStorage.setItem('clients', JSON.stringify(clients));
+  exibirClients();
 }
 
-function exibirTarefas() {
+function exibirClients() {
   const tabela = document.getElementById('tabela');
   const tabelaDevendo = document.getElementById('tabelaDevendo');
   const tabelaPago = document.getElementById('tabelaPago');
@@ -58,33 +58,33 @@ function exibirTarefas() {
   tabelaDevendo.innerHTML = '';
   tabelaPago.innerHTML = '';
 
-  const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+  const clients = JSON.parse(localStorage.getItem('clients')) || [];
   let totalDevendo = 0;
   let totalPago = 0;
 
-  tarefas.forEach((tarefa, index) => {
+  clients.forEach((client, index) => {
     const row = tabela.insertRow();
-    row.insertCell(0).textContent = tarefa.nome;
-    row.insertCell(1).textContent = tarefa.status;
-    row.insertCell(2).textContent = `R$ ${tarefa.valor.toFixed(2)}`;
+    row.insertCell(0).textContent = client.nome;
+    row.insertCell(1).textContent = client.status;
+    row.insertCell(2).textContent = `R$ ${client.valor.toFixed(2)}`;
 
     const cellOpcoes = row.insertCell(3);
     const btnEditar = document.createElement('button');
     btnEditar.className = 'icon-btn';
     btnEditar.innerHTML = '<i class="fas fa-edit"></i>';
-    btnEditar.onclick = () => editarTarefa(index);
+    btnEditar.onclick = () => editarClients(index);
     cellOpcoes.appendChild(btnEditar);
 
     const btnExcluir = document.createElement('button');
     btnExcluir.className = 'icon-btn';
     btnExcluir.innerHTML = '<i class="fas fa-trash-alt"></i>';
-    btnExcluir.onclick = () => excluirTarefa(index);
+    btnExcluir.onclick = () => excluirClients(index);
     cellOpcoes.appendChild(btnExcluir);
 
-    if (tarefa.status === 'devendo') {
-      totalDevendo += tarefa.valor;
-    } else if (tarefa.status === 'pago') {
-      totalPago += tarefa.valor;
+    if (client.status === 'devendo') {
+      totalDevendo += client.valor;
+    } else if (client.status === 'pago') {
+      totalPago += client.valor;
     }
   });
 
@@ -93,8 +93,8 @@ function exibirTarefas() {
 }
 
 function limparLocalStorage() {
-  localStorage.removeItem('tarefas');
-  exibirTarefas();
+  localStorage.removeItem('clients');
+  exibirClients();
 }
 
 function limparCampos() {
@@ -106,5 +106,5 @@ function limparCampos() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  exibirTarefas();
+  exibirClients();
 });
