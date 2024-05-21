@@ -48,8 +48,15 @@ function excluirClients(index) {
   localStorage.setItem('clients', JSON.stringify(clients));
   exibirClients();
 }
+function searchClients() {
+  const searchTerm = document.getElementById('search').value.toLowerCase();
+  const clients = JSON.parse(localStorage.getItem('clients')) || [];
+  const filteredClients = clients.filter(client => client.nome.toLowerCase().includes(searchTerm));
+  exibirClients(filteredClients);
+}
 
-function exibirClients() {
+
+function exibirClients(filteredClients = null) {
   const tabela = document.getElementById('tabela');
   const tabelaDevendo = document.getElementById('tabelaDevendo');
   const tabelaPago = document.getElementById('tabelaPago');
@@ -58,7 +65,8 @@ function exibirClients() {
   tabelaDevendo.innerHTML = '';
   tabelaPago.innerHTML = '';
 
-  const clients = JSON.parse(localStorage.getItem('clients')) || [];
+  const clients = filteredClients || JSON.parse(localStorage.getItem('clients')) || [];
+  clients.sort((a, b) => a.nome.localeCompare(b.nome));
   let totalDevendo = 0;
   let totalPago = 0;
 
@@ -67,6 +75,10 @@ function exibirClients() {
     row.insertCell(0).textContent = client.nome;
     row.insertCell(1).textContent = client.status;
     row.insertCell(2).textContent = `R$ ${client.valor.toFixed(2)}`;
+
+    if (client.valor >= 30) {
+      row.style.color = 'red';
+    }
 
     const cellOpcoes = row.insertCell(3);
     const btnEditar = document.createElement('button');
@@ -91,6 +103,7 @@ function exibirClients() {
   tabelaDevendo.innerHTML = `<tr><td>Total Devendo:</td><td>R$ ${totalDevendo.toFixed(2)}</td></tr>`;
   tabelaPago.innerHTML = `<tr><td>Total Pago:</td><td>R$ ${totalPago.toFixed(2)}</td></tr>`;
 }
+
 
 function limparLocalStorage() {
   localStorage.removeItem('clients');
