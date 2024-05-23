@@ -94,6 +94,42 @@ th {
   margin-left: 5px;
 }
 
+.warning-message-row {
+  position: absolute;
+  opacity: 0;
+  color: red;
+  font-size: 0.9em;
+  /* Tamanho menor do texto */
+  background-color: #ffe6e6;
+  /* Fundo levemente rosado */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(-10px);
+  /* Move a linha para cima para escondê-la */
+  pointer-events: none;
+  /* Evita que a linha receba eventos do mouse */
+}
+
+.highlight:hover+.warning-message-row {
+  opacity: 1;
+  transform: translateY(0);
+  /* Move a linha para sua posição original */
+}
+
+.highlight {
+  transition: background-color 0.3s ease;
+  position: relative;
+  /* Necessário para o posicionamento absoluto da mensagem */
+}
+
+.highlight:hover {
+  background-color: #f5f5f5;
+}
+
+tr:hover {
+  transition: all .5s ease;
+  background-color: #f5f5f5;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 10px;
