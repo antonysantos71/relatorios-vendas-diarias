@@ -76,8 +76,18 @@ function exibirClients(filteredClients = null) {
     row.insertCell(1).textContent = client.status;
     row.insertCell(2).textContent = `R$ ${client.valor.toFixed(2)}`;
 
-    if (client.valor >= 30) {
+    // codição de style o status
+    if (client.status.toLowerCase() === 'pago') {
+      row.style.color = 'green';
+    } else if (client.valor >= 25) {
       row.style.color = 'red';
+      row.classList.add('highlight');
+
+      const messageRow = tabela.insertRow();
+      const messageCell = messageRow.insertCell(0);
+      messageCell.colSpan = 4;
+      messageCell.textContent = "Limite ultrapassado, já pode cobrar";
+      messageRow.classList.add('warning-message-row');
     }
 
     const cellOpcoes = row.insertCell(3);
