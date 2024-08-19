@@ -1,9 +1,9 @@
 let editarIndex = -1; // Variável para armazenar o índice da tarefa sendo editada
 
-function adicionarClient() {
+function adicionarClient(e) {
+  const valor = document.getElementById('valor').value;
   const nome = document.getElementById('nome').value;
   const status = document.getElementById('status').value;
-  const valor = document.getElementById('valor').value;
   const valorFormatado = parseFloat(valor.replace(',', '.')).toFixed(2);
 
   const newClient = { nome, status, valor: parseFloat(valorFormatado) };
@@ -21,11 +21,19 @@ function adicionarClient() {
     alert("preencha os campos indicados");
   } else {
     localStorage.setItem('clients', JSON.stringify(clients));
+    exibirClients();
+    limparCampos();
   }
 
-  exibirClients();
-  limparCampos();
 }
+
+function authValue() {
+  const valueInput = parseFloat(document.querySelector('input#valor').value);
+  if (isNaN(valueInput) || valueInput <= 0) {
+    return;
+  }
+}
+
 
 function editarClients(index) {
   const clients = JSON.parse(localStorage.getItem('clients')) || [];
@@ -114,6 +122,13 @@ function exibirClients(filteredClients = null) {
   tabelaPago.innerHTML = `<tr><td>Total Pago:</td><td>R$ ${totalPago.toFixed(2)}</td></tr>`;
 }
 
+function authValue() {
+  const valueInput = parseInt(document.querySelector('input#valor').value);
+  if (isNaN(valueInput) || valueInput <= 0) {
+    document.querySelector('input#valor').value = '';
+  }
+
+}
 
 function limparLocalStorage() {
   localStorage.removeItem('clients');
@@ -130,4 +145,25 @@ function limparCampos() {
 
 document.addEventListener('DOMContentLoaded', () => {
   exibirClients();
+});
+
+
+function toggleTheme() {
+  // Alterna a classe 'dark-theme' no elemento body
+  document.body.classList.toggle('dark-theme');
+  
+  // Salva a preferência do tema no localStorage
+  if (document.body.classList.contains('dark-theme')) {
+    localStorage.setItem('theme', 'dark');
+  } else {
+    localStorage.setItem('theme', 'light');
+  }
+}
+
+// Aplica o tema salvo no localStorage quando a página é carregada
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+  }
 });

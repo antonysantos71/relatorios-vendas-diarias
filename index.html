@@ -1,42 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Relatorios diarios - vendas</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
-  <div class="container">
-    <h1>Adicionar Clientes</h1>
-    <input type="text" id="nome" placeholder="Nome">
-    <select id="status">
-      <option value="devendo">Devendo</option>
-      <option value="pago">Pago</option>
-    </select>
-    <input type="number" id="valor" placeholder="Valor">
-    <button id="btnAdicionar" onclick="adicionarClient()">Adicionar</button>
-    <input type="text" id="search" oninput="searchClients()" placeholder="Search clients...">
-    <hr>
-    <h1>Relatorios</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Status</th>
-          <th>Valor</th>
-          <th>Opções</th>
-        </tr>
-      </thead>
-      <tbody id="tabela"></tbody>
-    </table>
-    <h3>Total Devendo</h3>
-    <table id="tabelaDevendo"></table>
-    <h3>Total Pago</h3>
-    <table id="tabelaPago"></table>
-    <button class="clearStorage" onclick="limparLocalStorage()">Limpar Relatorios</button>
-  </div>
-  <script src="main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Relatorios diarios - vendas</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="titleHeader">
+        <h1>Adicionar Clientes</h1>
+        <div>
+          <button class="toggleThemeButton" onclick="toggleTheme()">
+            <i class="fas fa-sun"></i>
+          </button>
+        </div>
+      </div>
+      <input type="text" id="nome" placeholder="Nome" />
+      <select id="status">
+        <option value="devendo">Devendo</option>
+        <option value="pago">Pago</option>
+      </select>
+      <input
+        type="number"
+        id="valor"
+        placeholder="Valor"
+        onchange="authValue()"
+      />
+      <button id="btnAdicionar" onclick="adicionarClient()">Adicionar</button>
+      <input
+        type="text"
+        id="search"
+        oninput="searchClients()"
+        placeholder="Search clients..."
+      />
+      <hr />
+      <h1>Relatorios</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Status</th>
+            <th>Valor</th>
+            <th>Opções</th>
+          </tr>
+        </thead>
+        <tbody id="tabela"></tbody>
+      </table>
+      <h3>Total Devendo</h3>
+      <table id="tabelaDevendo"></table>
+      <h3>Total Pago</h3>
+      <table id="tabelaPago"></table>
+      <div class="btnStyle">
+        <button class="clearStorage" onclick="limparLocalStorage()">
+          Limpar Relatorios
+        </button>
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
 </html>
