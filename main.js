@@ -27,14 +27,6 @@ function adicionarClient(e) {
 
 }
 
-function authValue() {
-  const valueInput = parseFloat(document.querySelector('input#valor').value);
-  if (isNaN(valueInput) || valueInput <= 0) {
-    return;
-  }
-}
-
-
 function editarClients(index) {
   const clients = JSON.parse(localStorage.getItem('clients')) || [];
   const clientEditada = clients[index];
@@ -74,7 +66,6 @@ function exibirClients(filteredClients = null) {
   tabelaPago.innerHTML = '';
 
   const clients = filteredClients || JSON.parse(localStorage.getItem('clients')) || [];
-  clients.sort((a, b) => a.nome.localeCompare(b.nome));
   let totalDevendo = 0;
   let totalPago = 0;
 
@@ -87,7 +78,7 @@ function exibirClients(filteredClients = null) {
     // codição de style o status
     if (client.status.toLowerCase() === 'pago') {
       row.style.color = 'green';
-    } else if (client.valor >= 25) {
+    } else if (client.valor >= 0.50) {
       row.style.color = 'red';
       row.classList.add('highlight');
 
